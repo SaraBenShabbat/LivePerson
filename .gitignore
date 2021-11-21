@@ -58,4 +58,4 @@ terraform.rc
 .idea/
 
 # The GCP credential file
-terraform-gkecluster-keyfile.json
+first-assignment/terraform-gkecluster-keyfile.json
