@@ -1,0 +1,5 @@
+---
+instance_name: live-person-test
+machine_type: c2-standard-8
+disk_size_gb: 200
+ip_cidr_range: 172.16.0.0/28

@@ -1,0 +1,51 @@
+- name: create a network
+  google.cloud.gcp_compute_network:
+    name: network-instancetemplate
+    project: "live-person"
+    auth_kind: "serviceaccount"
+    service_account_file: "./terraform-gkecluster-keyfile.json"
+    state: present
+  register: network
+
+- name: create a address
+  google.cloud.gcp_compute_address:
+    name: address-instancetemplate
+    region: us-central1-a
+    project: "live-person"
+    auth_kind: "serviceaccount"
+    service_account_file: "./terraform-gkecluster-keyfile.json"
+    state: present
+  register: address
+
+  
+- name: Create disk for new instance
+  google.cloud.gcp_compute_disk:
+    name: "{{ instance_name }}"
+    size_gb: "{{ disk_size_gb }}"
+    source_image: 'projects/live-person/global/images/centos-7-v20211105'
+    zone: "us-central1-a"
+    project: "live-person"
+    auth_kind: "serviceaccount"
+    service_account_file: "./terraform-gkecluster-keyfile.json"
+    state: present
+  register: disk
+  
+- name: create a instance template
+  google.cloud.gcp_compute_instance_template:
+    name: "{{ instance_name }}"
+    properties:
+      disks:
+      - auto_delete: 'true'
+        boot: 'true'
+        source: "{{ disk }}"
+      machine_type: "{{ machine_type }}"
+      network_interfaces:
+      - network: "network-instancetemplate"
+        access_configs:
+        - name: test-config
+          type: ONE_TO_ONE_NAT
+          nat_ip: "address-instancetemplate"
+    project: "live-person"
+    auth_kind: serviceaccount
+    service_account_file: "./terraform-gkecluster-keyfile.json"
+    state: present

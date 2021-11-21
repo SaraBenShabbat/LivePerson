@@ -56,3 +56,6 @@ terraform.rc
 .7z
 .pam
 .idea/
+
+# The GCP credential file
+terraform-gkecluster-keyfile.json
