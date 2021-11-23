@@ -59,3 +59,4 @@ terraform.rc
 
 # The GCP credential file
 terraform-gkecluster-keyfile.json
+gkecluster-keyfile.json

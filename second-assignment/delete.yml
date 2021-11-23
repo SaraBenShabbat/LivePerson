@@ -1,31 +1,31 @@
 ---
-  - name: "Provisioning a GCP Compute Engine Instance Template"
+  - name: "Destroying a GCP Compute Engine Instance Template"
     hosts: localhost
     connection: local
     tasks:
 
-    - name: Create a network
+    - name: Delete a network
       google.cloud.gcp_compute_network:
         name: network-instancetemplate
         auto_create_subnetworks: 'true'
         project: "live-person-332313"
         auth_kind: "serviceaccount"
         service_account_file: "./gkecluster-keyfile.json"
-        state: present
+        state: absent
       register: network
 
-    - name: Create an address
+    - name: Delete an address
       google.cloud.gcp_compute_address:
         name: address-instancetemplate
         region: us-central1
         project: "live-person-332313"
         auth_kind: "serviceaccount"
         service_account_file: "./gkecluster-keyfile.json"
-        state: present
+        state: absent
       register: address
 
   
-    - name: Create a disk for new instance
+    - name: Delete a disk for new instance
       google.cloud.gcp_compute_disk:
         name: "disk-instancetemplate"
         size_gb: "200"
@@ -34,15 +34,16 @@
         project: "live-person-332313"
         auth_kind: "serviceaccount"
         service_account_file: "./gkecluster-keyfile.json"
-        state: present
+        state: absent
       register: disk
   
-    - name: Create the instance template
+    - name: Delete the instance template
       google.cloud.gcp_compute_instance_template:
         name: "instance-template"
         properties:
           disks:
           - auto_delete: 'true'
+            type: PERSISTENT
             boot: 'true'
             source: "{{ disk }}"
           machine_type: "c2-standard-8"
@@ -57,4 +58,4 @@
         project: "live-person-332313"
         auth_kind: serviceaccount
         service_account_file: "./gkecluster-keyfile.json"
-        state: present
+        state: absent

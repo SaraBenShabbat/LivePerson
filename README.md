@@ -7,12 +7,14 @@ The folder is comprised on Terraform HCL code for:
 
 Variables are defined in `variables.tf` named file, some of them have default values and hence you can not to touch them, while others don't have default values and hence you must pass them your custom values via: environmet variables, .tfvars extension file etc. 
 
-Run it by using Terraform CLI and typing in the command line: `terraform apply --auto-approve`.
+Run it by using Terraform CLI -
+For provisioning, type in the command line: `terraform apply --auto-approve`.
+For destryoing, type in the command line: `terraform destroy --auto-approve`.
 
 ## `second-assignment` named folder contains the code for the Compute Engine Instance Template assignment.
 The folder is comprised on Ansible code for:
-* Provisioning a GCP compute engine instance template.
+* Provisioning and destroying a GCP compute engine instance template.
 
-Run it by using Ansible CLI and typing in the command line: `ansible-laybook create.yml`.
-
-(- The main file of the task is second-assignment/roles/gcp-ansible/tasks/create.yml)
+Run it by using Ansible CLI -
+For provisioning, type in the command line: `ansible-playbook create.yml -u < username >`.
+For destryoing, type in the command line: `ansible-playbook delete.yml -u < username >`.
